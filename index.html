@@ -3,118 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abaca - Zuzzurullone</title>
+    <title>Menù</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
+            margin: 50px;
         }
 
-        h1 {
-            color: #333;
+        .container {
+            margin-bottom: 20px;
         }
+
+        button {
+            padding: 8px 16px;
+            margin-left: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 200px;
+        }
+
+        .string-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .string {
+            margin-right: 10px;
+        }
+
         h2 {
             color: #FF0000;
 			font-size: 24px;  
         }
-
-        .text-container {
-            /* margin-bottom: 20px; */
-			text-align: center; 
-        }
-
-        .input-container {
-            /* margin-bottom: 20px; */
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
-    <script src="parole.js"></script>
-    <div class="text-container">
-        <h1 id="frase">La tua parola è compresa tra:</h1>
-        <h1 id="a">ABACA</h1>
-        <h1 id="e">e</h1>
-        <h1 id="b">ZUZZURULLONE</h1>
+
+    <div class="container">
+        <span class="string" style="font-size: 34px;">Abaca - Zuzzurullone</span>
     </div>
 
-    <div class="input-container">
-        <input type="text" id="input" placeholder="Inserisci parola">
+    <div class="container">
+        <button id="casuale">Gioca con parola casuale</button>
     </div>
-    <div class="text-container">
+
+    <div class="container">
+        <input type="text" id="inputString" placeholder="Scegli parola per un amico">
+        <button id="pulsante">Conferma</button>
+    </div>
+
+    <div class="container">
         <h2 id="err"></h2>
     </div>
-    <button id="myButton" onclick="prova()">Conferma</button>
 
+    <div class="container string-container">
+        <span id="link" class="string"></span>
+        <button id="copia" style="display: none;">Copia link</button>
+    </div>
+    <script src="parole.js"></script>
     <script>
-	let flag = 0;
-	        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                document.getElementById('myButton').click();
-            }
-        });
-		function finale() {
-			document.getElementById('err').textContent="";
-			document.getElementById('input').style.display = 'none';
-			document.getElementById('frase').textContent="La tua parola è:";
-			document.getElementById('a').textContent=sol;
-			document.getElementById('e').textContent="";
-			if (k) document.getElementById('b').textContent="Hai indovinato in "+(k+1)+" tentativi.";
-			else document.getElementById('b').textContent="Hai indovinato al primo tentativo!";
-			document.getElementById('myButton').textContent="Nuova parola";
-			flag = 1;
-		}
+	
+		let link = "";
 		
-        function prova() {
-			if (flag) location.reload();
-            var testo = document.getElementById('input').value.toUpperCase().trim();
-			document.getElementById('input').focus();
-			if (testo == sol) finale();
-			else if (tutte.includes(testo)){
-				if (testo >a && testo <b){
-					document.getElementById('input').value="";
-					document.getElementById('err').textContent="";
-					k++;
-					if ( sol>testo) {document.getElementById('a').textContent =testo;a=testo}
-					else {document.getElementById('b').textContent =testo;b=testo;}
-				}else document.getElementById('err').textContent="parola non in range";
+		function cifra(parola) {
+			let parolaCifrata = 'cole43623.github.io/abaca?=';
+			
+			for (let i = 0; i < parola.length; i++) {
+				let lettera = parola[i];
+				let codiceASCII = lettera.charCodeAt(0);
+				let incremento = i + 1;
+				letteraCifrata = String.fromCharCode(((codiceASCII - 65 + incremento) % 26) + 65);
+				parolaCifrata += letteraCifrata;
 			}
-			else document.getElementById('err').textContent="parola non esistente";
+			for (let i = 0; i < 10-parola.length; i++) {
+				if (!i) parolaCifrata += "0";
+				else parolaCifrata += String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+			}
+
+			return parolaCifrata;
+
         }
 		
-		var sol = cof[Math.floor(Math.random() * cof.length)];
-		console.log(sol);
-		let k = 0;
-		let a = tutte[0];
-		let b = tutte[661420];
+        document.getElementById('casuale').addEventListener('click', function() {
+            alert('Hai cliccato sul pulsante singolo!');
+        });
+
+        document.getElementById('pulsante').addEventListener('click', function() {
+			document.getElementById('copia').textContent="Copia link";
+            const testo = document.getElementById('inputString').value.toUpperCase().trim();
+            if (tutte.slice(1, 661420).includes(testo)){
+				document.getElementById('err').textContent="";
+				link=cifra(testo);
+				document.getElementById('link').textContent=link;
+				document.getElementById('copia').style.display = "block";
+			}else {document.getElementById('err').textContent="Parola non valida.";
+				document.getElementById('copia').style.display = "none";
+				document.getElementById('link').textContent="";
+			}
+			});
+
+        document.getElementById('copia').addEventListener('click', function() {
+            navigator.clipboard.writeText(link);
+			document.getElementById('copia').textContent="Copiato!";
+        });
     </script>
 
 </body>
