@@ -96,6 +96,7 @@
         function prova() {
 			if (flag) location.reload();
             var testo = document.getElementById('input').value.toUpperCase().trim();
+			document.getElementById('input').focus();
 			if (testo == sol) finale();
 			else if (tutte.includes(testo)){
 				if (testo >a && testo <b){
