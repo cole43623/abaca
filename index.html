@@ -87,14 +87,15 @@
 			document.getElementById('frase').textContent="La tua parola è:";
 			document.getElementById('a').textContent=sol;
 			document.getElementById('e').textContent="";
-			document.getElementById('b').textContent="Hai indovinato in "+(k+1)+" tentativi.";
+			if (k) document.getElementById('b').textContent="Hai indovinato in "+(k+1)+" tentativi.";
+			else document.getElementById('b').textContent="Hai indovinato al primo tentativo!";
 			document.getElementById('myButton').textContent="Nuova parola";
 			flag = 1;
 		}
 		
         function prova() {
 			if (flag) location.reload();
-            var testo = document.getElementById('input').value.toUpperCase();
+            var testo = document.getElementById('input').value.toUpperCase().trim();
 			if (testo == sol) finale();
 			else if (tutte.includes(testo)){
 				if (testo >a && testo <b){

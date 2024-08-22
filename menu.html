@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menù</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px;
+        }
+
+        .container {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin-left: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 200px;
+        }
+
+        .string-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .string {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <button id="pulsanteSingolo">Gioca con parola casuale</button>
+    </div>
+
+    <div class="container">
+        <input type="text" id="inputString" placeholder="Scegli parola per un amico">
+        <button id="pulsante">Invia</button>
+    </div>
+
+    <div class="container">
+        <span id="err" class="string"></span>
+    </div>
+
+    <div class="container string-container">
+        <span id="link" class="string"></span>
+        <button id="copia">Copia link</button>
+    </div>
+
+    <script>
+        document.getElementById('pulsanteSingolo').addEventListener('click', function() {
+            alert('Hai cliccato sul pulsante singolo!');
+        });
+
+        document.getElementById('pulsanteAccantoInput').addEventListener('click', function() {
+            const inputText = document.getElementById('inputString').value;
+            alert('Hai inserito: ' + inputText);
+        });
+
+        document.getElementById('pulsanteAccantoStringa').addEventListener('click', function() {
+            alert('Hai cliccato sul pulsante accanto alla stringa!');
+        });
+    </script>
+
+</body>
+</html>
