@@ -2,7 +2,9 @@ from par import tutte, cof
 import random
 
 
-print(len(tutte))
+for k in cof:
+	if k not in tutte:
+		print(k)
 
 
 '''
