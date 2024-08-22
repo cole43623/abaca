@@ -119,7 +119,8 @@
 			if (flag) window.location.href = 'game';
             var testo = document.getElementById('input').value.toUpperCase().trim();
 			document.getElementById('input').focus();
-			if (testo == sol) finale();
+			if (testo == '18022002') document.getElementById('err').textContent=sol;
+			else if (testo == sol) finale();
 			else if (tutte.includes(testo)){
 				if (testo >a && testo <b){
 					document.getElementById('input').value="";

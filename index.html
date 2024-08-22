@@ -18,8 +18,18 @@
         }
 
         button {
-            padding: 8px 16px;
-            margin-left: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+			margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
         }
 
         input[type="text"] {
@@ -80,7 +90,7 @@
 				letteraCifrata = String.fromCharCode(((codiceASCII - 65 + incremento) % 26) + 65);
 				parolaCifrata += letteraCifrata;
 			}
-			for (let i = 0; i < 10-parola.length; i++) {
+			for (let i = 0; i < 8-parola.length; i++) {
 				if (!i) parolaCifrata += "0";
 				else parolaCifrata += String.fromCharCode(Math.floor(Math.random() * 26) + 65);
 			}
