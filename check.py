@@ -2,7 +2,7 @@ from par import tutte, cof
 import random
 
 
-for k in range(20):
+for k in range(40):
 	p=input().upper()
 	if len(p)>2 and p not in cof and p in tutte:
 		print('"'+p+'"\n')
