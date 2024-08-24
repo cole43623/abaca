@@ -78,11 +78,13 @@
 			let parolaCifrata = 'https://cole43623.github.io/abaca/game?=';
 			
 			for (let i = 0; i < parola.length; i++) {
+				const s1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+				const s2 = "PZUGJTRLHFCNVBSKQWMXOIEYDA";
 				let lettera = parola[i];
 				let codiceASCII = lettera.charCodeAt(0);
 				let incremento = i + 1;
 				letteraCifrata = String.fromCharCode(((codiceASCII - 65 + incremento) % 26) + 65);
-				parolaCifrata += letteraCifrata;
+				parolaCifrata += s2[s1.indexOf(letteraCifrata)];
 			}
 			for (let i = 0; i < 8-parola.length; i++) {
 				if (!i) parolaCifrata += "0";

@@ -85,17 +85,16 @@
 
 		function decifraParola(parolaCifrata) {
 			let parolaDecifrata = '';
-
+			const s1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			const s2 = "PZUGJTRLHFCNVBSKQWMXOIEYDA";
 			for (let i = 0; i < parolaCifrata.length; i++) {
-				let lettera = parolaCifrata[i];
+				let lettera = s1[s2.indexOf(parolaCifrata[i])];
 				let codiceASCII = lettera.charCodeAt(0);
 
-				// Calcola l'incremento (i + 1 per partire da 1 invece che 0)
 				let incremento = i + 1;
 
 				lettera = String.fromCharCode(((codiceASCII - 65 - incremento + 26) % 26) + 65);
 
-				// Aggiungi la lettera decifrata alla parola decifrata
 				parolaDecifrata += lettera;
 			}
 
