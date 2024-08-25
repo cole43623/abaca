@@ -76,12 +76,11 @@
     <button id="myButton" onclick="prova()">Conferma</button>
 	<button id="men" onclick="menu()" style="display: none;">Torna al menù</button>
     <script>
+
 	let flag = 0;
-	        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                document.getElementById('myButton').click();
-            }
-        });
+	document.addEventListener('keydown', function(event) {
+		if (event.key === 'Enter') document.getElementById('myButton').click();
+	});
 
 		function decifraParola(parolaCifrata) {
 			let parolaDecifrata = '';
@@ -90,14 +89,10 @@
 			for (let i = 0; i < parolaCifrata.length; i++) {
 				let lettera = s1[s2.indexOf(parolaCifrata[i])];
 				let codiceASCII = lettera.charCodeAt(0);
-
 				let incremento = i + 1;
-
 				lettera = String.fromCharCode(((codiceASCII - 65 - incremento + 26) % 26) + 65);
-
 				parolaDecifrata += lettera;
 			}
-
 			return parolaDecifrata;
 		}
 
@@ -113,10 +108,10 @@
 			document.getElementById('myButton').textContent="Nuova parola";
 			flag = 1;
 		}
-		
-        function prova() {
+
+		function prova() {
 			if (flag) window.location.href = 'game';
-            var testo = document.getElementById('input').value.toUpperCase().trim();
+			var testo = document.getElementById('input').value.toUpperCase().trim();
 			document.getElementById('input').focus();
 			if (testo == '18022002') document.getElementById('err').textContent=sol;
 			else if (testo == sol) finale();
@@ -130,33 +125,30 @@
 				}else document.getElementById('err').textContent="parola non in range";
 			}
 			else if (testo.length) document.getElementById('err').textContent="parola non esistente";
-        }
-		
+		}
+
 		function estraiSubString(str) {
 			let indiceUguale = str.indexOf('=');
 			if (indiceUguale === -1) return '';
-
 			let parteDopoUguale = str.substring(indiceUguale + 1);
-
 			let indiceZero = parteDopoUguale.indexOf('0');
 			if (indiceZero === -1) return parteDopoUguale;
-
 			return parteDopoUguale.substring(0, indiceZero);
 		}
-		
+
 		var sol;
-		let urlPagina = estraiSubString(window.location.href);
-		if (urlPagina.length) sol = decifraParola(urlPagina);
+		let urlPagina = decifraParola(estraiSubString(window.location.href));
+		if (urlPagina.length && tutte.includes(urlPagina)) sol = urlPagina;
 		else sol = cof[Math.floor(Math.random() * cof.length)];
 		console.log(sol);
 		let k = 0;
 		let a = tutte[0];
 		let b = tutte[661481];
 
-        document.getElementById('men').addEventListener('click', function() {
-            window.location.href = 'https://cole43623.github.io/abaca';
-        });
-    </script>
+		document.getElementById('men').addEventListener('click', function() {
+			window.location.href = 'https://cole43623.github.io/abaca';
+		});
+	</script>
 
 </body>
 </html>
