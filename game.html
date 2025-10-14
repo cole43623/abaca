@@ -5,78 +5,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abaca - Zuzzurullone</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
+		    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
+        position: relative;
+        overflow: hidden;
+    }
 
-        h1 {
-            color: #333;
-        }
-        h2 {
-            color: #FF0000;
-			font-size: 24px;  
-        }
+    .lettera {
+        position: absolute;
+        top: -50px;
+        user-select: none;
+        pointer-events: none;
+        opacity: 0.9;
+        transform-origin: center;
+        will-change: transform, top;
+        z-index: 1;
+        color: #666;
+    }
 
-        .text-container {
-            /* margin-bottom: 20px; */
-			text-align: center; 
-        }
+    .content {
+        position: relative;
+        z-index: 10;
+        
+        padding: 20px 40px;
+        border-radius: 10px;
+   
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centers input and button horizontally */
+        justify-content: center;
+    }
 
-        .input-container {
-            /* margin-bottom: 20px; */
-        }
+    h1 {
+        color: #333;
+        margin-bottom: 10px;
+    }
 
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
+    h2 {
+        color: #FF0000;
+        font-size: 24px;  
+        margin-bottom: 20px;
+    }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-			margin-bottom: 10px;
-        }
+    .text-container {
+        text-align: center; 
+    }
 
-        button:hover {
-            background-color: #0056b3;
-        }
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centers input + button horizontally */
+        width: 100%;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 10px;
+        position: relative;
+        z-index: 1000;
+        text-align: center; /* Optional: center the text inside */
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007BFF;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        position: relative;
+        z-index: 100;
+        margin: 5px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
     </style>
 </head>
 <body>
     <script src="parole.js"></script>
-    <div class="text-container">
-        <h1 id="frase">La tua parola è compresa tra:</h1>
-        <h1 id="a">ABACA</h1>
-        <h1 id="e">e</h1>
-        <h1 id="b">ZUZZURULLONE</h1>
-    </div>
+    
+    <div class="content">
+        <div class="text-container">
+            <h1 id="frase">La tua parola è compresa tra:</h1>
+            <h1 id="a">ABACA</h1>
+            <h1 id="e">e</h1>
+            <h1 id="b">ZUZZURULLONE</h1>
+        </div>
 
-    <div class="input-container">
-        <input type="text" id="input" placeholder="Inserisci parola">
+        <div class="input-container">
+            <input type="text" id="input" placeholder="Inserisci parola">
+        </div>
+        
+        <div class="text-container">
+            <h2 id="err"></h2>
+        </div>
+        
+        <button id="myButton" onclick="prova()">Conferma</button>
+        <button id="men" onclick="menu()" style="display: none;">Torna al menù</button>
     </div>
-    <div class="text-container">
-        <h2 id="err"></h2>
-    </div>
-    <button id="myButton" onclick="prova()">Conferma</button>
-	<button id="men" onclick="menu()" style="display: none;">Torna al menù</button>
     <script>
 
+const lettere = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numLettere = 60; // quante lettere generare
+
+    // Crea una lettera con proprietà casuali
+    function creaLettera() {
+      const span = document.createElement("span");
+      span.className = "lettera";
+      span.textContent = lettere[Math.floor(Math.random() * lettere.length)];
+
+      const size = Math.random() * 40 + 20; // grandezza tra 20 e 60 px
+      span.style.fontSize = size + "px";
+
+      const x = Math.random() * window.innerWidth;
+      span.style.left = x + "px";
+
+      span.style.top = -size + "px";
+      span.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+      document.body.appendChild(span);
+
+      const velocita = Math.random() * 1.5 + 0.5;  // velocità di caduta
+      const rotVel = (Math.random() - 0.5) * 3; // rotazione
+
+      let y = -size;
+      let rot = Math.random() * 360;
+
+      function anima() {
+        y += velocita;
+        rot += rotVel;
+        span.style.top = y + "px";
+        span.style.transform = `rotate(${rot}deg)`;
+
+        if (y < window.innerHeight + 50) {
+          requestAnimationFrame(anima);
+        } else {
+          span.remove(); // elimina la lettera uscita dallo schermo
+          creaLettera(); // ne crea una nuova
+        }
+      }
+
+      anima();
+    }
+
+    // Genera le lettere iniziali
+    for (let i = 0; i < numLettere; i++) {
+      setTimeout(creaLettera, i * 100); // partenza sfalsata
+    }
+
+    // Adatta il numero di lettere al ridimensionamento finestra
+    window.addEventListener("resize", () => {
+      document.querySelectorAll(".lettera").forEach(l => l.remove());
+      for (let i = 0; i < numLettere; i++) creaLettera();
+    });
 	let flag = 0;
 	document.addEventListener('keydown', function(event) {
 		if (event.key === 'Enter') document.getElementById('myButton').click();
@@ -110,7 +205,7 @@
 		}
 
 		function prova() {
-			if (flag) window.location.href = 'game';
+			if (flag) window.location.reload();
 			var testo = document.getElementById('input').value.toUpperCase().trim();
 			document.getElementById('input').focus();
 			if (testo == '18022002') document.getElementById('err').textContent=sol;
